@@ -20,4 +20,4 @@ init:
 submit:
 	@rm -f lab4_submission.zip
 	@zip -j lab4_submission.zip $(FILES)
-	@echo "Generated lab2_submission.zip. If there are any errors, please check if all of your files are in the right places. Congrats on finishing!"
+	@echo "Generated lab4_submission.zip. If there are any errors, please check if all of your files are in the right places. Congrats on finishing!"
