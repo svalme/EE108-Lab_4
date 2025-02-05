@@ -6,6 +6,7 @@ set FILES {
 	src/design/note_player.v
 	src/design/sine_reader.v
 	src/design/music_player.v
+	src/design/song_rom.v
 	src/sim/mcu_tb.v
 	src/sim/song_reader_tb.v
 	src/sim/note_player_tb.v
