@@ -12,7 +12,6 @@ set FILES {
 	src/sim/note_player_tb.v
 	src/sim/sine_reader_tb.v
 	src/sim/music_player_tb.v
-	src/lab4.xdc
 	lab4.runs/impl_1/lab4_top.bit
 	lab4.runs/impl_1/lab4_top_timing_summary_routed.rpt
 	lab4.runs/synth_1/lab4_top.vds
