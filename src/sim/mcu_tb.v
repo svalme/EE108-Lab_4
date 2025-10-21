@@ -46,10 +46,10 @@ module mcu_tb();
         #10;
         $display("Output: song=%d, play=%b, reset_player=%b", song, play, reset_player);
         if (song !== expected_song || play !== expected_play || reset_player !== expected_reset_player) begin
-            $display("FAIL: Test 1\n");
+            $display("FAIL: Test 1");
             errors = errors + 4'd1;
         end else begin
-            $display("PASS: Test 1\n");
+            $display("PASS: Test 1");
         end
         
         //Test 2
@@ -64,10 +64,10 @@ module mcu_tb();
         #10;
         $display("Output: song=%d, play=%b, reset_player=%b", song, play, reset_player);
         if (song !== expected_song || play !== expected_play || reset_player !== expected_reset_player) begin
-            $display("FAIL: Test 2\n");
+            $display("FAIL: Test 2");
             errors = errors + 4'd1;
         end else begin
-            $display("PASS: Test 2\n");
+            $display("PASS: Test 2");
         end
         
         //Test 3
@@ -82,10 +82,10 @@ module mcu_tb();
         #10;
         $display("Output: song=%d, play=%b, reset_player=%b", song, play, reset_player);
         if (song !== expected_song || play !== expected_play || reset_player !== expected_reset_player) begin
-            $display("FAIL: Test 3\n");
+            $display("FAIL: Test 3");
             errors = errors + 4'd1;
         end else begin
-            $display("PASS: Test 3\n");
+            $display("PASS: Test 3");
         end
         
         //Test 4
@@ -100,10 +100,10 @@ module mcu_tb();
         #10;
         $display("Output: song=%d, play=%b, reset_player=%b", song, play, reset_player);
         if (song !== expected_song || play !== expected_play || reset_player !== expected_reset_player) begin
-            $display("FAIL: Test 4\n");
+            $display("FAIL: Test 4");
             errors = errors + 4'd1;
         end else begin
-            $display("PASS: Test 4\n");
+            $display("PASS: Test 4");
         end
         
         //Test 5
@@ -118,10 +118,10 @@ module mcu_tb();
         #10;
         $display("Output: song=%d, play=%b, reset_player=%b", song, play, reset_player);
         if (song !== expected_song || play !== expected_play || reset_player !== expected_reset_player) begin
-            $display("FAIL: Test 5\n");
+            $display("FAIL: Test 5");
             errors = errors + 4'd1;
         end else begin
-            $display("PASS: Test 5\n");
+            $display("PASS: Test 5");
         end
     
         //Test 6
@@ -146,10 +146,10 @@ module mcu_tb();
         #10;
         $display("Output: song=%d, play=%b, reset_player=%b", song, play, reset_player);
         if (song !== expected_song || play !== expected_play || reset_player !== expected_reset_player) begin
-            $display("FAIL: Test 6\n");
+            $display("FAIL: Test 6");
             errors = errors + 4'd1;
         end else begin
-            $display("PASS: Test 6\n");
+            $display("PASS: Test 6");
         end
         
         //Test 7
@@ -170,10 +170,10 @@ module mcu_tb();
         #10;
         $display("Output: song=%d, play=%b, reset_player=%b", song, play, reset_player);
         if (song !== expected_song || play !== expected_play || reset_player !== expected_reset_player) begin
-            $display("FAIL: Test 7\n");
+            $display("FAIL: Test 7");
             errors = errors + 4'd1;
         end else begin
-            $display("PASS: Test 7\n");
+            $display("PASS: Test 7");
         end
     
         
@@ -204,10 +204,10 @@ module mcu_tb();
         #10;
         $display("Output: song=%d, play=%b, reset_player=%b", song, play, reset_player);
         if (song !== expected_song || play !== expected_play || reset_player !== expected_reset_player) begin
-            $display("FAIL: Test 8\n");
+            $display("FAIL: Test 8");
             errors = errors + 4'd1;
         end else begin
-            $display("PASS: Test 8\n");
+            $display("PASS: Test 8");
         end
         
         if (errors == 4'd0) begin
