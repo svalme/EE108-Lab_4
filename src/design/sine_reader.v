@@ -9,12 +9,15 @@ module sine_reader(
 );
 
     wire [9:0] raw_addr;
+    wire [9:0] rom_addr;    
 
     reg [21:0] next_addr;
     wire [21:0] current_addr;
 
-    reg [15:0] modified_sample;
+    wire [1:0] quadrant;
+
     wire [15:0] rom_sample;
+    reg [15:0] modified_sample;
 
     always @(*) begin
         next_addr = current_addr;
@@ -23,27 +26,26 @@ module sine_reader(
     end
 
     // store current address
-    dffr #(22) sine_addr (
-        .clk(clk),
-        .r(reset),
-        .en(generate_next),
-        .d(next_addr),
-        .q(current_addr)
-    );  
+    dffre #(22) sine_addr (.clk(clk), .r(reset), .en(generate_next), .d(next_addr), .q(current_addr));  
 
+    assign quadrant = current_addr[21:20];
     assign raw_addr = current_addr[19:10]; 
-    sine_rom sin (.clk(clk), .addr(raw_addr), .dout(rom_sample)); 
 
-    // flip sample across axes if needed
+    // determine ROM address based on quadrant; quadrant 1: 01, quadrant 3: 11 need address inversion
+    assign rom_addr = ((quadrant == 2'b01) || (quadrant == 2'b11)) ? ~raw_addr : raw_addr;
+
+    // retrieve sample from sine ROM
+    sine_rom sin (.clk(clk), .addr(rom_addr), .dout(rom_sample)); 
+
+    
     always @(*) begin
+        // flip the sine wave vertically; adjusts for negative y values
         case (current_addr[21:20])
-            2'b00: modified_sample = rom_sample;          // 0 to 90 degrees
-            2'b01: modified_sample = 16'h7FFF - rom_sample; // 90 to 180 degrees
-            2'b10: modified_sample = 0 - rom_sample;         // 180 to 270 degrees
-            2'b11: modified_sample = rom_sample - 16'h7FFF; // 270 to 360 degrees
-            default: modified_sample = rom_sample;
+            2'b10, 2'b11: modified_sample = 0 - rom_sample;  // Q2: 10, Q3: 11 → negative half
+            default:      modified_sample = rom_sample;       // Q0: 00, Q1: 01 → positive half
         endcase
     end
+
 
     assign sample = modified_sample;
 
