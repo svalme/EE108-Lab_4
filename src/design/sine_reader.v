@@ -47,7 +47,6 @@ module sine_reader(
         endcase
     end
 
-
     assign sample = modified_sample;
 
     // for flip-flops that keep track of cycles

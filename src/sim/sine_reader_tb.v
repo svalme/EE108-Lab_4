@@ -25,6 +25,51 @@ module sine_reader_tb();
     // Tests
     initial begin
 
+        generate_next = 1'b0;
+        step_size = 20'd1000;
+
+        #10; // wait one cycle
+
+        // Test #1
+        generate_next = 1'b1;
+        #10;  // 1 clock high
+        generate_next = 1'b0;
+        #20;  // 2-cycle wait for output
+
+        $display("[%0t] step_size=%0d sample_ready=%b sample=%0d", $time, step_size, sample_ready, sample);
+
+        // Wait a few idle cycles before next pulse
+        #20;
+
+        // Test #2 (new step size)
+        step_size = 20'd1500;
+        generate_next = 1'b1;
+        #10;
+        generate_next = 1'b0;
+        #20; // 2-cycle wait for output
+
+        $display("[%0t] step_size=%0d sample_ready=%b sample=%0d", $time, step_size, sample_ready, sample);
+
+        #20; 
+
+        // Test #3 (new step size)
+        step_size = 20'd2000;
+        generate_next = 1'b1;
+        #10;
+        generate_next = 1'b0;
+        #20; // 2-cycle wait for output
+        $display("[%0t] step_size=%0d sample_ready=%b sample=%0d", $time, step_size, sample_ready, sample);
+
+        #20;
+
+        // Test #4 (new step size)
+        step_size = 20'd2500;
+        generate_next = 1'b1;
+        #10;
+        generate_next = 1'b0;
+        #20;
+        $display("[%0t] step_size=%0d sample_ready=%b sample=%0d", $time, step_size, sample_ready, sample);
+
     end
 
 endmodule
