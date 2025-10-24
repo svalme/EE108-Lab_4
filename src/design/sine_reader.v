@@ -20,9 +20,10 @@ module sine_reader(
     reg [15:0] modified_sample;
 
     always @(*) begin
-        next_addr = current_addr;
-        if (generate_next) 
-            next_addr = current_addr + {2'b00, step_size}; // align step size to 22 bits
+        case (generate_next) 
+            1'b1: next_addr = current_addr + {2'b00, step_size}; // align step size to 22 bits
+            default: next_addr = current_addr;
+        endcase
     end
 
     // store current address
@@ -49,6 +50,22 @@ module sine_reader(
 
     assign sample = modified_sample;
 
-    // todo: signal if sample is ready
+    // for flip-flops that keep track of cycles
+    reg first_cycle;
+    reg second_cycle;
+    reg sample_ready;
+
+    // keep track of first cycle; start first cycle when generate_next is high
+    dffr #(1) cycle_one (.clk(clk), .r(reset), .d(generate_next), .q(first_cycle));  // generate_next?
+    // keep track of second cycle                             flip-flops store sequentially?
+    dffr #(1) cycle_two (.clk(clk), .r(reset), .d(first_cycle), .q(second_cycle));  // generate_next? 
+
+    always @(*) begin
+        case ({reset, second_cycle}) // state
+            2'b10: sample_ready = 1'b0; // reset
+            2'b01: sample_ready = 1'b1; // second_cycle
+            default: sample_ready = 1'b0; // 11: reset and second cycle both high, 00: neither high
+        endcase
+    end
 
 endmodule
