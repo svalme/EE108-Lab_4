@@ -29,8 +29,8 @@ module sine_reader(
     // store current address
     dffre #(22) sine_addr (.clk(clk), .r(reset), .en(generate_next), .d(next_addr), .q(current_addr));  
 
-    assign quadrant = current_addr[21:20];
-    assign raw_addr = current_addr[19:10]; 
+    assign quadrant = current_addr[21:20]; // get quadrant from the top 2 bits
+    assign raw_addr = current_addr[19:10]; // raw, unflipped address for ROM
 
     // determine ROM address based on quadrant; quadrant 1: 01, quadrant 3: 11 need address inversion
     assign rom_addr = ((quadrant == 2'b01) || (quadrant == 2'b11)) ? ~raw_addr : raw_addr;
@@ -42,8 +42,8 @@ module sine_reader(
     always @(*) begin
         // flip the sine wave vertically; adjusts for negative y values
         case (current_addr[21:20])
-            2'b10, 2'b11: modified_sample = 0 - rom_sample;  // Q2: 10, Q3: 11 → negative half
-            default:      modified_sample = rom_sample;       // Q0: 00, Q1: 01 → positive half
+            2'b10, 2'b11: modified_sample = 0 - rom_sample;  // Q2: 10, Q3: 11 --> negative half
+            default:      modified_sample = rom_sample;       // Q0: 00, Q1: 01 --> positive half
         endcase
     end
 
