@@ -1,3 +1,4 @@
+`timescale 1ns/1ps
 module sine_reader_tb();
 
     reg clk, reset, generate_next;
@@ -34,7 +35,7 @@ module sine_reader_tb();
         generate_next = 1'b1;
         #10;  // 1 clock high
         generate_next = 1'b0;
-        #20;  // 2-cycle wait for output
+        #10;  // 2-cycle wait for output
 
         $display("[%0t] step_size=%0d sample_ready=%b sample=%0d", $time, step_size, sample_ready, sample);
 
@@ -46,7 +47,7 @@ module sine_reader_tb();
         generate_next = 1'b1;
         #10;
         generate_next = 1'b0;
-        #20; // 2-cycle wait for output
+        #10; // 2-cycle wait for output
 
         $display("[%0t] step_size=%0d sample_ready=%b sample=%0d", $time, step_size, sample_ready, sample);
 
@@ -57,7 +58,7 @@ module sine_reader_tb();
         generate_next = 1'b1;
         #10;
         generate_next = 1'b0;
-        #20; // 2-cycle wait for output
+        #10; // 2-cycle wait for output
         $display("[%0t] step_size=%0d sample_ready=%b sample=%0d", $time, step_size, sample_ready, sample);
 
         #20;
@@ -67,7 +68,7 @@ module sine_reader_tb();
         generate_next = 1'b1;
         #10;
         generate_next = 1'b0;
-        #20;
+        #10;
         $display("[%0t] step_size=%0d sample_ready=%b sample=%0d", $time, step_size, sample_ready, sample);
 
     end
