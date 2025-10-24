@@ -50,7 +50,7 @@ module sine_reader(
     assign sample = modified_sample;
 
     // for flip-flops that keep track of cycles
-    reg first_cycle;
+    wire first_cycle;
 
     // first cycle; start first cycle when generate_next is high
     dffr #(1) cycle_one (.clk(clk), .r(reset), .d(generate_next), .q(first_cycle));  
