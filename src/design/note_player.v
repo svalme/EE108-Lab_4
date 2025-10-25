@@ -13,7 +13,6 @@ module note_player(
 );
     wire [19:0] step_size;
     wire [5:0] current_note;
-    wire [5:0] initial_duration;
     wire [5:0] time_remaining;
     wire [5:0] next_time_remaining_val;
     wire [15:0] sine_sample;
@@ -39,6 +38,7 @@ module note_player(
     // feeding the step size to the sine reader
     sine_reader sine_gen (.clk(clk), .reset(reset), .step_size(step_size), .generate_next(generate_next_sample), .sample_ready(sine_sample_ready), .sample(sine_sample));
     
+    //outputs
     assign sample_out = sine_sample; 
     assign new_sample_ready = sine_sample_ready; 
     assign done_with_note = (time_remaining == 6'd0);
