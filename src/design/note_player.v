@@ -20,9 +20,6 @@ module note_player(
     
     // storing a note
     dffre #(6) note_reg (.clk(clk), .r(reset), .en(load_new_note), .d(note_to_load), .q(current_note));
-        
-    // storing song duration
-    dffre #(6) duration_reg (.clk(clk), .r(reset), .en(load_new_note), .d(duration_to_load), .q(initial_duration));
     
     // calculating time remaining for the note
     assign next_time_remaining_val = (time_remaining == 6'd0) ? 6'd0 : time_remaining - 6'd1;
