@@ -40,10 +40,10 @@ module sine_reader(
 
     
     always @(*) begin
-        // flip the sine wave vertically; adjusts for negative y values
-        case (current_addr[21:20])
-            2'b10, 2'b11: modified_sample = 0 - rom_sample;  // Q2: 10, Q3: 11 --> negative half
-            default:      modified_sample = rom_sample;       // Q0: 00, Q1: 01 --> positive half
+        // flip the sine wave vertically to adjust for negative y values
+        casex (quadrant)
+            2'b1x: modified_sample = 0 - rom_sample; // Q2: 10, Q3: 11 --> negative half
+            default: modified_sample = rom_sample; // Q0: 00, Q1: 01 --> positive half
         endcase
     end
 
