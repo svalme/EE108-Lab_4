@@ -8,8 +8,6 @@ module mcu(
     output [1:0] song,
     input song_done
 );
-
-    // Implementation goes here!
     wire [1:0] curr_song;
     reg [1:0] next_song;
     wire curr_play;
@@ -20,24 +18,31 @@ module mcu(
     dffr play_instance(.clk(clk), .r(reset), .d(next_play), .q(curr_play));
     
     always @(*) begin
-        if (song_done || next_button == 1) begin //playing the next song
-            next_song = curr_song + 1;
-            next_play = 0;
-            reset_play = 1;
-        end
-        if (next_button == 0 && play_button == 1 && song_done == 0) begin //pausing and continuing the song
-            next_song = curr_song;
-            next_play = ~curr_play;
-            reset_play = 0;
-        end
-        if (song_done == 0 && next_button == 0 && play_button == 0) begin //nothing happens - song keeps playing
-            next_song = curr_song;
-            next_play = curr_play;
-            reset_play = 0;
-        end
+        casex ({song_done, next_button, play_button})
+            3'bx1x: begin // if next_button = 1 we skip to next song
+                next_song = curr_song + 1;
+                next_play = 0;
+                reset_play = 1;
+            end
+            3'b10x: begin // if song_done = 1 then next_button = 0
+                next_song = curr_song + 1;
+                next_play = 0;
+                reset_play = 1;
+            end
+            3'b001: begin //if play_button = 1, no next/done
+                next_song = curr_song;
+                next_play = ~curr_play;
+                reset_play = 0;
+            end
+            default: begin // if nothing is pressed keep state
+                next_song = curr_song;
+                next_play = curr_play;
+                reset_play = 0;
+            end
+        endcase
     end
     
-    //set outputs according to the situation
+    // outputs
     assign play = curr_play;
     assign song = curr_song;
     assign reset_player = reset_play;
