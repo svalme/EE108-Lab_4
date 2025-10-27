@@ -15,7 +15,7 @@ module song_reader(
     reg [5:0] next_note_counter;
     reg next_done;
     
-    wire [6:0] rom_addr = {song, note_counter};
+    wire [6:0] rom_addr = {song, note_counter[4:0]};
     wire [11:0] rom_data;
     assign note = rom_data[11:6];
     assign duration = rom_data[5:0];
