@@ -54,5 +54,5 @@ module song_reader(
 end
     
     assign song_done = done;
-    assign new_note = (play && note_done && !done && note_counter > 0 && note_counter < 6'd32);
+    assign new_note = (play && note_done && !done && note_counter >= 0 && note_counter < 6'd32);
 endmodule
