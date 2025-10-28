@@ -21,17 +21,13 @@ module note_player(
     // storing a note
     dffre #(6) note_reg (.clk(clk), .r(reset), .en(load_new_note), .d(note_to_load), .q(current_note));
     
-    // calculating time remaining for the note
-    assign next_time_remaining_val = (sine_sample_ready)     ? duration_to_load :          // load new note
-                                     (!play_enable)          ? time_remaining  :           // pause: hold value
-                                     (time_remaining > 6'd0) ? time_remaining - 6'd1 : // play: decrement
-                                                               6'd0;                   // stay at zero
-
+    assign next_time_remaining_val = (time_remaining == 6'd0) ? 6'd0 : time_remaining - 6'd1;
+    wire [5:0] counter_data_in = load_new_note ? duration_to_load : next_time_remaining_val;
     wire counter_enable = beat & play_enable & (time_remaining > 6'd0);
     
         
     // duration counter
-    dffre #(6) duration_counter (.clk(clk), .r(reset), .en(counter_enable), .d(next_time_remaining_val), .q(time_remaining));
+    dffre #(6) duration_counter (.clk(clk), .r(reset), .en(counter_enable | load_new_note), .d(counter_data_in), .q(time_remaining));
     
     // looking up the note's step size in a frequency rom
     frequency_rom freq_rom (.clk(clk), .addr(current_note), .dout(step_size));
