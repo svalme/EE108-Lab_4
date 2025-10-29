@@ -130,8 +130,6 @@ module song_reader_tb();
         
         // Test #5: Reach end of song
         $display("Test 5: Reach end of song");
-
-        // Fast forward to note 32 - need 28 more pulses (currently at 3)
         note_done = 1'b1; #10; note_done = 1'b0; #10;
         note_done = 1'b1; #10; note_done = 1'b0; #10;
         note_done = 1'b1; #10; note_done = 1'b0; #10;
