@@ -9,7 +9,6 @@ module song_reader(
     output [5:0] duration,
     output new_note
 );     
-
     wire [5:0] note_counter;
     wire done;
     reg [5:0] next_note_counter;
@@ -30,22 +29,19 @@ module song_reader(
             next_note_counter = note_counter;
             next_done = done;
         end
-
         1'b1: begin
             next_note_counter =
-            	done ? note_counter :    
-                (note_counter == 6'd0 && note_done) ? 6'd1 :                        
+            	done ? note_counter :                                  
+                (note_counter == 6'd0) ? 6'd1 :                        
                 (note_done && note_counter == 6'd32) ? note_counter :  
-                (note_done && note_counter > 6'd0) ? note_counter + 1 :                       
+                (note_done) ? note_counter + 1 :                       
                 note_counter;                                          
-
             next_done =
                 done ? done :                                          
                 (note_counter == 6'd0) ? 1'b0 :                        
                 (note_done && note_counter == 6'd32) ? 1'b1 :          
                 1'b0;                                                  
         end
-
         default: begin
             next_note_counter = note_counter;
             next_done = done;
@@ -54,5 +50,5 @@ module song_reader(
 end
     
     assign song_done = done;
-    assign new_note = (play && note_done && !done && note_counter > 6'd0 && note_counter <= 6'd32);
+    assign new_note = (play && !done && ((note_counter == 6'd0) || (note_done && note_counter > 6'd0 && note_counter <= 6'd32)));
 endmodule
